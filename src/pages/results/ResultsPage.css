@@ -1,0 +1,40 @@
+/* Animation on the wrapper */
+.results-wrapper {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+
+.results-wrapper.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Optional stagger on rows */
+.table tbody tr {
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.results-wrapper.visible .table tbody tr {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.results-wrapper.visible .table tbody tr:nth-child(1) { transition-delay: 0.1s; }
+.results-wrapper.visible .table tbody tr:nth-child(2) { transition-delay: 0.2s; }
+.results-wrapper.visible .table tbody tr:nth-child(3) { transition-delay: 0.3s; }
+.results-wrapper.visible .table tbody tr:nth-child(4) { transition-delay: 0.4s; }
+
+
+.rre-button-general-1{
+  color : #FF5757 !important;
+  border-color: #FF5757 !important;
+  
+}
+
+.rre-button-general-1:hover{
+  background-color: #FF5757 !important;
+  color: #3a3a3a !important;
+}
