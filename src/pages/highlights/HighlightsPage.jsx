@@ -1,53 +1,76 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import { fetchHighlights } from '../../services/api';
 
 const HighlightsPage = () => {
-  // State to hold all highlight items fetched from the backend
   const [highlights, setHighlights] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const highlightsPerPage = 2;
 
-  // Fetch highlights from the backend when the component mounts
+  // fetches highlights
   useEffect(() => {
-    axios.get('http://localhost:8080/rre/api/v1/highlights')
-      .then(response => {
-        // Sort highlights by date in descending order (newest first)
-        const sorted = response.data.sort((a, b) => new Date(b.highlightDate) - new Date(a.highlightDate));
-        setHighlights(sorted);
-      })
-      .catch(error => {
-        console.error('Error fetching highlights:', error);
-      });
+    const loadHighlights = async () => {
+      const data = await fetchHighlights();
+      setHighlights(data);
+    };
+
+    loadHighlights();
   }, []);
 
+
+  // after pagination, scrolls to the top of the page
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }, [currentPage]);
+
+  // Pagination logic
+  const indexOfLastHighlight = currentPage * highlightsPerPage;
+  const indexOfFirstHighlight = indexOfLastHighlight - highlightsPerPage;
+  const currentHighlights = highlights.slice(indexOfFirstHighlight, indexOfLastHighlight);
+  const totalPages = Math.ceil(highlights.length / highlightsPerPage);
+
   return (
-    <>
-
-
-      {/* Highlights Section */}
-      <div className="container mt-5">
-        <h2>Race Highlights</h2>
-        <div className="row">
-          {highlights.map((highlight) => (
-            <div className="col-md-6 mb-4" key={highlight.highlightID}>
-              <div className="card h-100">
-                {/* Dynamic Image */}
-                <img 
-                  src={highlight.highlightImagePath} 
-                  className="card-img-top" 
-                  alt={highlight.highlightHeading} 
+    <div className="container mt-5">
+      <h2>Race Highlights</h2>
+      <div className="row">
+        {currentHighlights.map((highlight) => (
+          <div className="col-md-6 mb-4" key={highlight.highlightID}>
+            <div className="card h-100">
+             {/* Add image if it exists */}
+                <img
+                  src={`http://localhost:8080${highlight.highlightImagePath}`}
+                  className="card-img-top"
+                  alt={highlight.highlightHeading}
                 />
-                <div className="card-body">
-                  {/* Dynamic Heading & Description */}
-                  <h5 className="card-title">{highlight.highlightHeading}</h5>
-                  <p className="card-text">{highlight.highlightDescription}</p>
-                </div>
+              <div className="card-body w-75">
+                <h5 className="card-title">{highlight.highlightHeading}</h5>
+                <p className="card-text">{highlight.highlightDescription}</p>
               </div>
             </div>
-          ))}
-        </div>
+          </div>
+        ))}
       </div>
-
-    </>
+      
+      {/* Pagination Controls */}
+      {totalPages > 1 && (
+        <div className="pagination-controls text-center mt-3">
+          <button 
+            className="btn btn-outline-primary me-2 rre-button-general-1"
+            onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <span> Page {currentPage} of {totalPages} </span>
+          <button 
+            className="btn btn-outline-primary ms-2 rre-button-general-1"
+            onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+            disabled={currentPage === totalPages}
+          >
+            Forward
+          </button>
+        </div>
+      )}
+    </div>
   );
 };
 

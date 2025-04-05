@@ -1,24 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchHighlights } from '../../services/api';
 
 
 const HomePage = () => {
   const [highlights, setHighlights] = useState([]);
 
   useEffect(() => {
-    axios.get('http://localhost:8080/rre/api/v1/highlights')
-      .then(response => {
-        // Sort highlights by date in descending order (newest first)
-        const sorted = response.data.sort((a, b) => new Date(b.highlightDate) - new Date(a.highlightDate));
-  
-        // Limit to the first three records
-        setHighlights(sorted.slice(0, 3));
-      })
-      .catch(error => {
-        console.error('Error fetching highlights:', error);
-      });
-  }, []);
-  
+    const loadHighlights = async () => {
+        const data = await fetchHighlights();
+        setHighlights(data.slice(0, 3)); // Limit to 3 records
+    };
+
+    loadHighlights();
+}, []);
 
 
   return (
@@ -38,6 +32,12 @@ const HomePage = () => {
       {highlights.map(highlight => (
       <div className="col-md-4 d-flex align-items-stretch" key={highlight.highlightID}>
       <div className="card mb-4 w-100">
+         {/* Add image if it exists */}
+          <img
+            src={`http://localhost:8080${highlight.highlightImagePath}`}
+            className="card-img-top"
+            alt={highlight.highlightHeading}
+          />
         <div className="card-body d-flex flex-column">
           <h5 className="card-title">{highlight.highlightHeading}</h5>
           <p className="card-text flex-grow-1">{highlight.highlightDescription}</p>

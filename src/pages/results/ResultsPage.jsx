@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { fetchRaceResults } from '../../services/api';
 import './ResultsPage.css';
 
 export default function RaceResultsPage() {
@@ -10,19 +10,21 @@ export default function RaceResultsPage() {
     const recordsPerPage = 10;
 
     useEffect(() => {
-        const fetchRaceResults = async () => {
-            try {
-                const response = await axios.get('http://localhost:8080/rre/api/v1/race-results');
-                setResults(response.data);
-                setLoading(false);
-            } catch (error) {
-                console.error('Error fetching race results:', error);
-                setLoading(false);
-            }
+        const loadRaceResults = async () => {
+            const data = await fetchRaceResults();
+            setResults(data);
+            setLoading(false);
         };
 
-        fetchRaceResults();
+        loadRaceResults();
     }, []);
+
+
+
+    // after pagination, scrolls to the top of the page
+    useEffect(() => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }, [currentPage]);
 
     // Filter results based on search query
     const filteredResults = results.filter(result =>
