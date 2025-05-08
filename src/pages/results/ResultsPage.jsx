@@ -9,13 +9,32 @@ export default function RaceResultsPage() {
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
 
+
+    // v1 useeffect
+    // useEffect(() => {
+    //     const loadRaceResults = async () => {
+    //         const data = await fetchRaceResults();
+    //         setResults(data);
+    //         setLoading(false);
+    //     };
+
+    //     loadRaceResults();
+    // }, []);
+
+    // updated useffect for data sorting
     useEffect(() => {
         const loadRaceResults = async () => {
             const data = await fetchRaceResults();
-            setResults(data);
+            const raceArray = Array.isArray(data)
+                ? data
+                : Array.isArray(data.results)
+                    ? data.results
+                    : [];
+    
+            setResults(raceArray);
             setLoading(false);
         };
-
+    
         loadRaceResults();
     }, []);
 
