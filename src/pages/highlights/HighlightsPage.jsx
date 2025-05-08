@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { fetchHighlights } from '../../services/api';
 
+
+const API_BASE_URL = import.meta.env.VITE_API_URL;
+
 const HighlightsPage = () => {
   const [highlights, setHighlights] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +40,7 @@ const HighlightsPage = () => {
             <div className="card h-100">
              {/* Add image if it exists */}
                 <img
-                  src={`https://8c0d-102-140-218-132.ngrok-free.app/${highlight.highlightImagePath}`}
+                  src={`${API_BASE_URL}/${highlight.highlightImagePath}`}
                   className="card-img-top"
                   alt={highlight.highlightHeading}
                 />
