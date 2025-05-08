@@ -34,7 +34,7 @@ const HomePage = () => {
       <div className="card mb-4 w-100">
          {/* Add image if it exists */}
           <img
-            src={`http://localhost:8080${highlight.highlightImagePath}`}
+            src={`https://23a3-102-140-218-132.ngrok-free.app${highlight.highlightImagePath}`}
             className="card-img-top"
             alt={highlight.highlightHeading}
           />

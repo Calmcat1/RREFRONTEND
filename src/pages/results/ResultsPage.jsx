@@ -71,6 +71,7 @@ export default function RaceResultsPage() {
                 ) : (
                     <>
                         {/* Results Table */}
+                        <div className="table-container">
                         <table className="table table-striped table-bordered mt-4 table-hover">
                             <thead className="table-dark">
                                 <tr>
@@ -107,6 +108,7 @@ export default function RaceResultsPage() {
                                 )}
                             </tbody>
                         </table>
+                        </div>
 
                         {/* Pagination Controls */}
                         {totalPages > 1 && (

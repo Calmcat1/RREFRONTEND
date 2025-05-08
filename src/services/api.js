@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080/rre/api/v1';
+const API_BASE_URL = 'https://23a3-102-140-218-132.ngrok-free.app/rre/api/v1';
 
 /**
  * Fetch highlights from the API.

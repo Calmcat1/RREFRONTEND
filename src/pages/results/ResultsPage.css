@@ -38,3 +38,22 @@
   background-color: #FF5757 !important;
   color: #3a3a3a !important;
 }
+
+
+@media (max-width: 576px) {
+  .table-container {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  table {
+    width: 100%;
+    font-size: 0.5rem;
+    min-width: 400px; /* Prevents table from shrinking too much */
+  }
+
+  th, td {
+    padding: 0.5rem;
+    word-break: break-word;
+  }
+}
