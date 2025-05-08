@@ -8,7 +8,7 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
  */
 export const fetchHighlights = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/rre/v1/highlights`);
+        const response = await axios.get(`${API_BASE_URL}rre/v1/highlights`);
         return response.data.sort((a, b) => new Date(b.highlightDate) - new Date(a.highlightDate)); // Sort descending
     } catch (error) {
         console.error("Error fetching highlights:", error);
@@ -23,7 +23,7 @@ export const fetchHighlights = async () => {
  */
 export const fetchRaceResults = async () => {
     try {
-        const response = await axios.get(`${API_BASE_URL}/rre/v1/race-results`);
+        const response = await axios.get(`${API_BASE_URL}rre/v1/race-results`);
         return response.data;
     } catch (error) {
         console.error("Error fetching race results:", error);
