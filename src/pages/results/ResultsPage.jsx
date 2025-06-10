@@ -14,6 +14,7 @@ export default function RaceResultsPage() {
     useEffect(() => {
         const loadRaceResults = async () => {
             const data = await fetchRaceResults();
+            setResults(data);
             const raceArray = Array.isArray(data)
                 ? data
                 : Array.isArray(data.results)
