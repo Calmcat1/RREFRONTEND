@@ -11,15 +11,15 @@ export default function RaceResultsPage() {
 
 
     // v1 useeffect
-    // useEffect(() => {
-    //     const loadRaceResults = async () => {
-    //         const data = await fetchRaceResults();
-    //         setResults(data);
-    //         setLoading(false);
-    //     };
+     useEffect(() => {
+         const loadRaceResults = async () => {
+             const data = await fetchRaceResults();
+            setResults(data);
+             setLoading(false);
+        };
 
-    //     loadRaceResults();
-    // }, []);
+         loadRaceResults();
+     }, []);
 
     // updated useffect for data sorting
     useEffect(() => {
