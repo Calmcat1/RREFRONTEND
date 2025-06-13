@@ -8,8 +8,20 @@ const HomePage = () => {
 
   useEffect(() => {
     const loadHighlights = async () => {
+      try {
         const data = await fetchHighlights();
-        setHighlights(data.slice(0, 3)); // Limit to 3 records
+        console.log("Fetched data:", data); // Add this for debugging in production
+  
+        if (Array.isArray(data)) {
+          setHighlights(data.slice(0, 3));
+        } else {
+          console.error("Expected array but got:", data);
+          setHighlights([]); // fallback
+        }
+      } catch (error) {
+        console.error("Error fetching highlights:", error);
+        setHighlights([]);
+      }
     };
 
     loadHighlights();
@@ -35,7 +47,7 @@ const HomePage = () => {
       <div className="card mb-4 w-100">
          {/* Add image if it exists */}
           <img
-            src={`${API_BASE_URL}/${highlight.highlightImagePath}`}
+            src={`http://localhost:8080${highlight.highlightImagePath}`}
             className="card-img-top"
             alt={highlight.highlightHeading}
           />
