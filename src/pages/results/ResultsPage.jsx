@@ -85,9 +85,9 @@ export default function RaceResultsPage() {
                             <thead className="table-dark">
                                 <tr>
                                     <th>Driver Position</th>
-                                    <th>Driver Name</th>
-                                    <th>Driver Car No</th>
                                     <th>Garage Name</th>
+                                    <th>Driver Car No</th>
+                                    <th>Driver Name</th>
                                     <th>Garage Speciality</th>
                                     <th>Event Year</th>
                                     <th>Driver Best Time</th>

@@ -10,7 +10,7 @@ const HomePage = () => {
     const loadHighlights = async () => {
       try {
         const data = await fetchHighlights();
-        console.log("Fetched data:", data); // Add this for debugging in production
+        console.log("Fetched data:", data); // Production debugging
   
         if (Array.isArray(data)) {
           setHighlights(data.slice(0, 3));
