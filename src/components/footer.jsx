@@ -10,7 +10,7 @@ export default function footer() {
                 <Link to="/terms" className="text-white">Terms of Service</Link>
             </p>
             <p>
-                <a href="https://instagram.com/racingresultske" target="_blank" rel="noopener noreferrer" className="text-white">Instagram</a>
+                <a href="https://instagram.com/rre_racing" target="_blank" rel="noopener noreferrer" className="text-white">Instagram</a>
             </p>
         </footer>
     );
