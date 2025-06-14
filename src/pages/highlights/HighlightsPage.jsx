@@ -40,7 +40,7 @@ const HighlightsPage = () => {
             <div className="card h-100">
              {/* Add image if it exists */}
                 <img
-                  src={`${API_BASE_URL}/${highlight.highlightImagePath}`}
+                  src={`https://rre-1.onrender.com${highlight.highlightImagePath}`}
                   className="card-img-top"
                   alt={highlight.highlightHeading}
                 />

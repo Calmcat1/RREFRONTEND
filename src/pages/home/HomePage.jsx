@@ -47,7 +47,7 @@ const HomePage = () => {
       <div className="card mb-4 w-100">
          {/* Add image if it exists */}
           <img
-            src={`http://localhost:8080${highlight.highlightImagePath}`}
+            src={`https://rre-1.onrender.com${highlight.highlightImagePath}`}
             className="card-img-top"
             alt={highlight.highlightHeading}
           />
