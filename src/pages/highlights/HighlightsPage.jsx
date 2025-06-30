@@ -7,15 +7,21 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 const HighlightsPage = () => {
   const [highlights, setHighlights] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
+  const [loading, setLoading] = useState(true); //v2 loading page
   const highlightsPerPage = 2;
 
   // fetches highlights
   useEffect(() => {
     const loadHighlights = async () => {
-      const data = await fetchHighlights();
-      setHighlights(data);
+      try {
+        const data = await fetchHighlights();
+        setHighlights(data);
+      } catch (error) {
+        console.error('Failed to fetch highlights', error);
+      } finally {
+        setLoading(false); // <-- stop loading no matter what
+      }
     };
-
     loadHighlights();
   }, []);
 
@@ -30,6 +36,16 @@ const HighlightsPage = () => {
   const indexOfFirstHighlight = indexOfLastHighlight - highlightsPerPage;
   const currentHighlights = highlights.slice(indexOfFirstHighlight, indexOfLastHighlight);
   const totalPages = Math.ceil(highlights.length / highlightsPerPage);
+
+   // If loading, show loader
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Loading... please wait while the server starts</p>
+      </div>
+    );
+  }
 
   return (
     <div className="container mt-5">

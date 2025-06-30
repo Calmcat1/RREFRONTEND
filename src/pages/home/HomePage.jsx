@@ -5,27 +5,42 @@ const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const HomePage = () => {
   const [highlights, setHighlights] = useState([]);
+  const [loading, setLoading] = useState(true); //v2 loading page
 
-  useEffect(() => {
-    const loadHighlights = async () => {
-      try {
-        const data = await fetchHighlights();
-        console.log("Fetched data:", data); // Production debugging
-  
-        if (Array.isArray(data)) {
-          setHighlights(data.slice(0, 3));
-        } else {
-          console.error("Expected array but got:", data);
-          setHighlights([]); // fallback
-        }
-      } catch (error) {
-        console.error("Error fetching highlights:", error);
-        setHighlights([]);
+useEffect(() => {
+  const loadHighlights = async () => {
+    setLoading(true); // show loading
+    try {
+      const data = await fetchHighlights();
+      console.log("Fetched data:", data); // production debugging
+
+      if (Array.isArray(data)) {
+        setHighlights(data.slice(0, 3));
+      } else {
+        console.error("Expected array but got:", data);
+        setHighlights([]); // fallback
       }
-    };
+    } catch (error) {
+      console.error("Error fetching highlights:", error);
+      setHighlights([]); // fallback
+    } finally {
+      setLoading(false); // hide loading, even on error
+    }
+  };
 
-    loadHighlights();
+  loadHighlights();
 }, []);
+
+   // If loading, show loader
+  if (loading) {
+    return (
+      <div className="loading-container">
+        <div className="spinner"></div>
+        <p>Loading... please wait while the server starts</p>
+      </div>
+    );
+  }
+
 
 
   return (

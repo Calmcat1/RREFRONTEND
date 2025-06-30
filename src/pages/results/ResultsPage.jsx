@@ -5,28 +5,32 @@ import './ResultsPage.css';
 export default function RaceResultsPage() {
     const [results, setResults] = useState([]);
     const [search, setSearch] = useState("");
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(true); //v2 loading page
     const [currentPage, setCurrentPage] = useState(1);
     const recordsPerPage = 10;
-
-
-    // updated useffect for data sorting
-    useEffect(() => {
-        const loadRaceResults = async () => {
-            const data = await fetchRaceResults();
-            setResults(data);
-            const raceArray = Array.isArray(data)
-                ? data
-                : Array.isArray(data.results)
-                    ? data.results
-                    : [];
     
-            setResults(raceArray);
-            setLoading(false);
-        };
-    
-        loadRaceResults();
-    }, []);
+
+// updated useffect for data sorting
+  useEffect(() => {
+  const loadRaceResults = async () => {
+    try {
+      const data = await fetchRaceResults();
+      const raceArray = Array.isArray(data)
+        ? data
+        : Array.isArray(data.results)
+          ? data.results
+          : [];
+      setResults(raceArray);
+    } catch (error) {
+      console.error('Failed to fetch race results:', error);
+    } finally {
+      setLoading(false);  // always hide loader after attempt
+    }
+  };
+
+  loadRaceResults();
+}, []);
+
 
 
 
@@ -47,6 +51,16 @@ export default function RaceResultsPage() {
     const currentRecords = filteredResults.slice(indexOfFirstRecord, indexOfLastRecord);
 
     const totalPages = Math.ceil(filteredResults.length / recordsPerPage);
+
+    // If loading, show loader
+    if (loading) {
+        return (
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Loading... please wait while the server starts</p>
+          </div>
+        );
+    }
 
     return (
         <div className="container mt-5">
