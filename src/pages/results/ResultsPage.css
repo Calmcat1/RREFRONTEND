@@ -50,8 +50,8 @@
 
   table {
     width: 100%;
-    font-size: 0.5rem;
-    min-width: 400px; /* Prevents table from shrinking too much */
+    font-size: 0.75rem;
+    min-width: 800px; /* Prevents table from shrinking too much */
   }
 
   th, td {
