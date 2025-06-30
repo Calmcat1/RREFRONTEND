@@ -7,6 +7,7 @@ export default function RaceResultsPage() {
     const [search, setSearch] = useState("");
     const [loading, setLoading] = useState(true); //v2 loading page
     const [currentPage, setCurrentPage] = useState(1);
+    const [visible, setVisible] = useState(false); //updated for table load in
     const recordsPerPage = 10;
     
 
@@ -25,6 +26,7 @@ export default function RaceResultsPage() {
       console.error('Failed to fetch race results:', error);
     } finally {
       setLoading(false);  // always hide loader after attempt
+      setVisible(true) // table slides int
     }
   };
 
@@ -42,7 +44,8 @@ export default function RaceResultsPage() {
     // Filter results based on search query
     const filteredResults = results.filter(result =>
         result.driverName?.toLowerCase().includes(search.toLowerCase()) ||
-        result.garageName?.toLowerCase().includes(search.toLowerCase())
+        result.garageName?.toLowerCase().includes(search.toLowerCase()) ||
+        (result.raceResultYear && new Date(result.raceResultYear).getFullYear().toString().includes(search))
     );
 
     // Pagination logic
@@ -72,7 +75,7 @@ export default function RaceResultsPage() {
                     <input
                         type="text"
                         className="form-control"
-                        placeholder="Search driver or team..."
+                        placeholder="Search driver or team or Year..."
                         value={search}
                         onChange={(e) => {
                             setSearch(e.target.value);
